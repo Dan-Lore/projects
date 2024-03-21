@@ -21,5 +21,3 @@ with open('answer.txt', 'w', encoding='utf-8') as answer:
     score_value = soup.body.find('div', attrs={'class':'score-value'}).text
     score_notice = soup.body.find('div', attrs={'class': 'score-notice'}).text
     #print(score_value, score_notice)
-
-    
