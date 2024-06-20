@@ -27,21 +27,25 @@ code_to_smile = {
      "Mist": "Туман \U0001F32B"
 }
 
+commands = {
+        '/add_task': 'ДД-ММ-ГГГГ Новая задача - для добавления новой задачи',
+        '/last_tasks': ' - для просмотра 10 последних задач',
+        '/today_tasks': ' - для просмотра задач на сегодня',
+        '/complete_task': ' Номер_задачи - для отметки задачи как выполненной',
+        '/delete_task': ' Номер_задачи - для удаления задачи из списка',
+        '/weather': ' Название_города - для просмотра текущей погоды(вернёт погоду для Владивостока, если не ввести город)'
+}
+
 @bot.message_handler(commands=['start'])
 def handle_start(message):
     bot.reply_to(message, 'Привет! Я бот для составления списка задач. Используй /help для просмотра списка команд управления.')
 
 @bot.message_handler(commands=['help'])
 def handle_help(message):
-    commands = [
-        '/add_task ДД-ММ-ГГГГ Новая задача - для добавления новой задачи',
-        '/last_tasks - для просмотра 10 последних задач',
-        '/today_tasks - для просмотра задач на сегодня',
-        '/complete_task Номер_задачи - для отметки задачи как выполненной',
-        '/delete_task Номер_задачи - для удаления задачи из списка',
-        '/weather название_города - для просмотра текущей погоды(вернёт погоду для Владивостока, если не ввести город)'
-    ]
-    reply_text = 'Доступные команды:\n' + '\n'.join(commands)
+    global commands
+    reply_text = 'Доступные команды:\n'
+    for command, description in commands.items():
+        reply_text += f"{command} {description}\n"
     bot.reply_to(message, reply_text)
 
 @bot.message_handler(commands=['add_task'])
@@ -144,4 +148,5 @@ def get_weather(message):
     except:
         bot.reply_to(message, "ОШИБКА!")
 
+bot.set_my_commands(commands)
 bot.polling()
